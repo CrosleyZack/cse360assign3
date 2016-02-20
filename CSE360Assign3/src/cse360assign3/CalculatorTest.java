@@ -148,11 +148,51 @@ public class CalculatorTest {
 	
 	
 	/**
-	 * Tests history functionality by printing and verifying strings.
+	 * Tests history functionality by printing and verifying strings. Verifies that string isn't change if a divide
+	 * 	by 0 operation is attempted
 	 * 
 	 */
 	@Test
 	public void testGetHistory () {
-		fail("Not yet implemented");
+		Calculator test = new Calculator();
+		assertEquals(0, test.getTotal());
+		String history = test.getHistory();
+		assertSame(history, "0");
+		
+		test.add(4);
+		history = test.getHistory();
+		assertEquals(4, test.getTotal());
+		assertEquals(history, "0 + 4");
+		System.out.println(history);
+		
+		test.multiply(3);
+		history = test.getHistory();
+		assertEquals(12, test.getTotal());
+		assertEquals(history, "0 + 4 * 3");
+		System.out.println(history);
+		
+		test.divide(6);
+		history = test.getHistory();
+		assertEquals(2, test.getTotal());
+		assertEquals(history, "0 + 4 * 3 / 6");
+		System.out.println(history);
+		
+		test.subtract(4);
+		history = test.getHistory();
+		assertEquals(-2, test.getTotal());
+		assertEquals(history, "0 + 4 * 3 / 6 - 4");
+		System.out.println(history);
+
+		test.divide(0);
+		history = test.getHistory();
+		assertEquals(-2, test.getTotal());
+		assertEquals(history, "0 + 4 * 3 / 6 - 4");
+		System.out.println(history);
+		
+		test.add(-1);
+		history = test.getHistory();
+		assertEquals(-3, test.getTotal());
+		assertEquals(history, "0 + 4 * 3 / 6 - 4 + -1");
+		System.out.println(history);
 	}
 }
